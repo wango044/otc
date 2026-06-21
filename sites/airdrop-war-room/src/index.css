@@ -157,7 +157,7 @@ h1 {
 
 .task {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
   gap: 10px;
   align-items: center;
   border-bottom: 3px solid #101015;
@@ -169,6 +169,12 @@ h1 {
   padding: 6px 8px;
   background: #f7ff00;
   font-style: normal;
+}
+
+.task button {
+  padding: 7px 10px;
+  background: #00d4ff;
+  box-shadow: none;
 }
 
 .broadcast {

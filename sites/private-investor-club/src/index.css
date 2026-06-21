@@ -150,6 +150,12 @@ h2 {
   border-radius: 8px;
   padding: 18px;
   background: rgba(255, 252, 245, 0.72);
+  cursor: pointer;
+}
+
+.deal-list .selected-deal {
+  border-color: #8a6a2f;
+  background: #fff4d9;
 }
 
 .deal-list strong {
@@ -195,6 +201,12 @@ form {
   gap: 10px;
 }
 
+.application-note {
+  grid-column: 2;
+  color: #d2ad67;
+  line-height: 1.5;
+}
+
 input,
 button {
   border: 1px solid rgba(255, 250, 240, 0.24);
@@ -220,6 +232,10 @@ button {
   .apply-panel,
   form {
     grid-template-columns: 1fr;
+  }
+
+  .application-note {
+    grid-column: auto;
   }
 
   .membership-strip {

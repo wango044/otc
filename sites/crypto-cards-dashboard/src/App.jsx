@@ -1,7 +1,9 @@
+import { useState } from 'react'
+
 const cards = [
-  { name: 'Founder Black', network: 'USDC', limit: '$84,000', status: 'Live' },
-  { name: 'Ops Green', network: 'USDT', limit: '$26,500', status: 'Frozen' },
-  { name: 'Travel Gold', network: 'BTC', limit: '$12,800', status: 'Live' },
+  { name: 'Founder Black', network: 'USDC', limit: 84000, status: 'Live' },
+  { name: 'Ops Green', network: 'USDT', limit: 26500, status: 'Frozen' },
+  { name: 'Travel Gold', network: 'BTC', limit: 12800, status: 'Live' },
 ]
 
 const transactions = [
@@ -12,6 +14,39 @@ const transactions = [
 ]
 
 function App() {
+  const [issuedCards, setIssuedCards] = useState(cards)
+  const [selectedCard, setSelectedCard] = useState(cards[0].name)
+  const [exportState, setExportState] = useState('Export CSV')
+  const activeCard = issuedCards.find((card) => card.name === selectedCard) ?? issuedCards[0]
+  const liveCards = issuedCards.filter((card) => card.status === 'Live').length
+  const totalLimit = issuedCards.reduce((sum, card) => sum + card.limit, 0)
+
+  function issueCard() {
+    const nextCard = {
+      name: `Growth ${issuedCards.length + 1}`,
+      network: 'USDC',
+      limit: 15000,
+      status: 'Live',
+    }
+    setIssuedCards((current) => [...current, nextCard])
+    setSelectedCard(nextCard.name)
+  }
+
+  function toggleCardStatus() {
+    setIssuedCards((current) =>
+      current.map((card) =>
+        card.name === selectedCard
+          ? { ...card, status: card.status === 'Live' ? 'Frozen' : 'Live' }
+          : card,
+      ),
+    )
+  }
+
+  function exportLedger() {
+    setExportState('CSV ready')
+    window.setTimeout(() => setExportState('Export CSV'), 1600)
+  }
+
   return (
     <main className="cards-dashboard">
       <aside className="sidebar">
@@ -30,7 +65,7 @@ function App() {
             <p>Crypto Cards Dashboard</p>
             <h1>Stablecoin spend control for teams that move fast.</h1>
           </div>
-          <button type="button">Issue card</button>
+          <button type="button" onClick={issueCard}>Issue card</button>
         </header>
 
         <section className="overview-grid">
@@ -38,7 +73,7 @@ function App() {
             <p>Total available</p>
             <strong>$428,940</strong>
             <div className="balance-line">
-              <span></span>
+              <span style={{ width: `${Math.min(100, Math.round((totalLimit / 160000) * 100))}%` }}></span>
             </div>
             <dl>
               <div>
@@ -54,16 +89,25 @@ function App() {
                 <dd>$60,320</dd>
               </div>
             </dl>
+            <div className="live-summary">
+              <span>{liveCards} live cards</span>
+              <span>{formatMoney(totalLimit)} total limits</span>
+            </div>
           </article>
 
           <article className="card-stack" id="cards">
-            {cards.map((card) => (
-              <div className="crypto-card" key={card.name}>
+            {issuedCards.map((card) => (
+              <button
+                className={`crypto-card ${selectedCard === card.name ? 'selected-card' : ''}`}
+                key={card.name}
+                onClick={() => setSelectedCard(card.name)}
+                type="button"
+              >
                 <span>{card.status}</span>
                 <h2>{card.name}</h2>
                 <p>{card.network} settlement</p>
-                <strong>{card.limit}</strong>
-              </div>
+                <strong>{formatMoney(card.limit)}</strong>
+              </button>
             ))}
           </article>
 
@@ -71,7 +115,7 @@ function App() {
             <h2>Spend rules</h2>
             <div className="rule">
               <span>Daily team limit</span>
-              <strong>$72,000</strong>
+              <strong>{formatMoney(activeCard.limit)}</strong>
             </div>
             <div className="rule">
               <span>Auto-freeze threshold</span>
@@ -81,13 +125,16 @@ function App() {
               <span>Approval wallets</span>
               <strong>4 of 6</strong>
             </div>
+            <button type="button" onClick={toggleCardStatus}>
+              {activeCard.status === 'Live' ? 'Freeze selected card' : 'Unfreeze selected card'}
+            </button>
           </article>
         </section>
 
         <section className="ledger" id="ledger">
           <div className="section-head">
             <h2>Recent card activity</h2>
-            <button type="button">Export CSV</button>
+            <button type="button" onClick={exportLedger}>{exportState}</button>
           </div>
           {transactions.map(([merchant, asset, amount, state]) => (
             <div className="transaction" key={merchant}>
@@ -101,6 +148,14 @@ function App() {
       </section>
     </main>
   )
+}
+
+function formatMoney(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(value)
 }
 
 export default App

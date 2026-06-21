@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const protocols = [
   ['Aave v4', '$18.2M', 'Low', '+2.4%'],
   ['Pendle pools', '$7.8M', 'Medium', '-1.1%'],
@@ -12,6 +14,12 @@ const alerts = [
 ]
 
 function App() {
+  const [scanCount, setScanCount] = useState(0)
+  const [riskFilter, setRiskFilter] = useState('All')
+  const filteredProtocols = protocols.filter((protocol) => riskFilter === 'All' || protocol[2] === riskFilter)
+  const riskScore = Math.max(42, 68 - scanCount * 6)
+  const varValue = Math.max(0.82, 1.42 - scanCount * 0.14)
+
   return (
     <main className="risk-terminal">
       <header className="terminal-header">
@@ -33,7 +41,10 @@ function App() {
             Portfolio risk console for desks watching protocol exposure,
             liquidity pressure, liquidation zones, and counterparty movement.
           </p>
-          <button type="button">Run risk scan</button>
+          <button type="button" onClick={() => setScanCount((count) => count + 1)}>Run risk scan</button>
+          {scanCount > 0 && (
+            <div className="scan-meta">Last scan reduced active exposure flags by {scanCount * 3}</div>
+          )}
         </aside>
 
         <section className="risk-main" id="exposure">
@@ -44,11 +55,11 @@ function App() {
             </article>
             <article>
               <span>Risk score</span>
-              <strong>68</strong>
+              <strong>{riskScore}</strong>
             </article>
             <article>
               <span>VaR 24h</span>
-              <strong>$1.42M</strong>
+              <strong>${varValue.toFixed(2)}M</strong>
             </article>
           </div>
 
@@ -65,8 +76,16 @@ function App() {
           </article>
 
           <article className="protocol-table" id="protocols">
-            <h2>Protocol book</h2>
-            {protocols.map(([name, exposure, risk, delta]) => (
+            <div className="protocol-head">
+              <h2>Protocol book</h2>
+              <select value={riskFilter} onChange={(event) => setRiskFilter(event.target.value)}>
+                <option>All</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+              </select>
+            </div>
+            {filteredProtocols.map(([name, exposure, risk, delta]) => (
               <div className="protocol-row" key={name}>
                 <span>{name}</span>
                 <strong>{exposure}</strong>
@@ -85,6 +104,12 @@ function App() {
               <p>{alert}</p>
             </article>
           ))}
+          {scanCount > 0 && (
+            <article>
+              <span>Scan result</span>
+              <p>{scanCount} scan run. Counterparty map refreshed with tighter alert thresholds.</p>
+            </article>
+          )}
         </aside>
       </section>
     </main>

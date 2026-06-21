@@ -153,6 +153,21 @@ button {
   background: linear-gradient(90deg, #20bf7a, #ffe45e);
 }
 
+.live-summary {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.live-summary span {
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: #dff7ec;
+  color: #0d5f48;
+  font-size: 14px;
+}
+
 dl {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -177,11 +192,15 @@ dd {
 }
 
 .crypto-card {
+  width: 100%;
+  border: 0;
   min-height: 145px;
   border-radius: 8px;
   padding: 18px;
   color: #ffffff;
   background: #162c5d;
+  text-align: left;
+  box-shadow: none;
 }
 
 .crypto-card:nth-child(2) {
@@ -212,10 +231,20 @@ dd {
   font-size: 22px;
 }
 
+.selected-card {
+  outline: 4px solid #20bf7a;
+}
+
 .limits-panel {
   display: grid;
   align-content: start;
   gap: 16px;
+}
+
+.limits-panel button {
+  width: 100%;
+  margin-top: 6px;
+  background: #10251f;
 }
 
 .rule {

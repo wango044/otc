@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const deals = [
   ['Pre-seed infra', '$250K min', 'Open for 12 members'],
   ['Validator yield note', '9.4% target', 'Allocation review'],
@@ -5,6 +7,16 @@ const deals = [
 ]
 
 function App() {
+  const [selectedDeal, setSelectedDeal] = useState(deals[0][0])
+  const [application, setApplication] = useState({ name: '', telegram: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  function submitApplication(event) {
+    event.preventDefault()
+    if (!application.name.trim() || !application.telegram.trim()) return
+    setSubmitted(true)
+  }
+
   return (
     <main className="club-page">
       <header className="club-nav">
@@ -44,7 +56,11 @@ function App() {
         </div>
         <div className="deal-list">
           {deals.map(([name, size, state]) => (
-            <article key={name}>
+            <article
+              className={selectedDeal === name ? 'selected-deal' : ''}
+              key={name}
+              onClick={() => setSelectedDeal(name)}
+            >
               <span>{name}</span>
               <strong>{size}</strong>
               <p>{state}</p>
@@ -75,11 +91,26 @@ function App() {
           <p>Applications reopen this quarter</p>
           <h2>Request a private intro.</h2>
         </div>
-        <form>
-          <input aria-label="Name" placeholder="Name" />
-          <input aria-label="Telegram" placeholder="Telegram" />
-          <button type="button">Apply</button>
+        <form onSubmit={submitApplication}>
+          <input
+            aria-label="Name"
+            onChange={(event) => setApplication((current) => ({ ...current, name: event.target.value }))}
+            placeholder="Name"
+            value={application.name}
+          />
+          <input
+            aria-label="Telegram"
+            onChange={(event) => setApplication((current) => ({ ...current, telegram: event.target.value }))}
+            placeholder="Telegram"
+            value={application.telegram}
+          />
+          <button type="submit">{submitted ? 'Received' : 'Apply'}</button>
         </form>
+        {submitted && (
+          <p className="application-note">
+            Intro request logged for {application.name}. Preferred room: {selectedDeal}.
+          </p>
+        )}
       </section>
     </main>
   )

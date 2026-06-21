@@ -1,12 +1,36 @@
+import { useState } from 'react'
+
 const books = [
-  ['BTC / USDC', '$102,440', '$18.4M', '0.08%'],
-  ['ETH / USDT', '$5,180', '$11.7M', '0.11%'],
-  ['SOL / USDC', '$238.20', '$7.6M', '0.16%'],
+  ['BTC/USDC', '$102,440', '$18.4M', '0.08%'],
+  ['ETH/USDT', '$5,180', '$11.7M', '0.11%'],
+  ['SOL/USDC', '$238.20', '$7.6M', '0.16%'],
 ]
+
+const pairPrices = {
+  'BTC/USDC': 102440,
+  'ETH/USDT': 5180,
+  'SOL/USDC': 238.2,
+}
 
 const rails = ['Same-day settlement', 'Treasury desks', 'DAO liquidity', 'Stablecoin blocks']
 
 function App() {
+  const [pair, setPair] = useState('BTC/USDC')
+  const [notional, setNotional] = useState('2500000')
+  const [side, setSide] = useState('Buy')
+  const [quote, setQuote] = useState(null)
+  const cleanNotional = Number(notional.replace(/[^0-9.]/g, '')) || 0
+
+  function previewExecution() {
+    const units = cleanNotional / pairPrices[pair]
+    const fee = cleanNotional * 0.0012
+    setQuote({
+      units,
+      fee,
+      eta: cleanNotional > 3000000 ? '40 min' : '18 min',
+    })
+  }
+
   return (
     <main className="otc-page">
       <header className="otc-nav">
@@ -40,7 +64,7 @@ function App() {
           </div>
           <label>
             Pair
-            <select defaultValue="BTC/USDC">
+            <select value={pair} onChange={(event) => setPair(event.target.value)}>
               <option>BTC/USDC</option>
               <option>ETH/USDT</option>
               <option>SOL/USDC</option>
@@ -48,16 +72,35 @@ function App() {
           </label>
           <label>
             Notional
-            <input defaultValue="$2,500,000" />
+            <input value={formatInput(notional)} onChange={(event) => setNotional(event.target.value)} />
           </label>
           <label>
             Side
             <div className="side-toggle">
-              <button type="button">Buy</button>
-              <button type="button">Sell</button>
+              <button
+                className={side === 'Buy' ? 'active-side' : ''}
+                onClick={() => setSide('Buy')}
+                type="button"
+              >
+                Buy
+              </button>
+              <button
+                className={side === 'Sell' ? 'active-side' : ''}
+                onClick={() => setSide('Sell')}
+                type="button"
+              >
+                Sell
+              </button>
             </div>
           </label>
-          <button className="quote-button" type="button">Preview execution</button>
+          <button className="quote-button" onClick={previewExecution} type="button">Preview execution</button>
+          {quote && (
+            <div className="quote-result">
+              <span>{side} estimate</span>
+              <strong>{quote.units.toFixed(pair === 'SOL/USDC' ? 0 : 2)} {pair.split('/')[0]}</strong>
+              <p>{formatMoney(quote.fee)} desk fee · {quote.eta} settlement window</p>
+            </div>
+          )}
         </aside>
       </section>
 
@@ -70,9 +113,9 @@ function App() {
           </p>
         </div>
         <div className="book-table">
-          {books.map(([pair, mid, depth, spread]) => (
-            <div className="book-row" key={pair}>
-              <span>{pair}</span>
+          {books.map(([bookPair, mid, depth, spread]) => (
+            <div className={`book-row ${bookPair === pair ? 'selected-row' : ''}`} key={bookPair}>
+              <span>{bookPair}</span>
               <strong>{mid}</strong>
               <em>{depth}</em>
               <b>{spread}</b>
@@ -97,6 +140,20 @@ function App() {
       </section>
     </main>
   )
+}
+
+function formatInput(value) {
+  const amount = Number(value.replace(/[^0-9.]/g, ''))
+  if (!amount) return value
+  return `$${amount.toLocaleString('en-US')}`
+}
+
+function formatMoney(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(value)
 }
 
 export default App

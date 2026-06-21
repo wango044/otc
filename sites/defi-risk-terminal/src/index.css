@@ -128,6 +128,14 @@ button {
   cursor: pointer;
 }
 
+.scan-meta {
+  margin-top: 12px;
+  color: #8ea39a;
+  font-family: 'Geist Mono', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .risk-main {
   display: grid;
   gap: 12px;
@@ -161,6 +169,23 @@ button {
 .heatmap,
 .protocol-table {
   padding: 16px;
+}
+
+.protocol-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.protocol-head select {
+  border: 1px solid #2a332f;
+  border-radius: 8px;
+  padding: 8px;
+  background: #111614;
+  color: #d8e1dc;
+  font: inherit;
 }
 
 .heatmap-head {
@@ -256,6 +281,10 @@ button {
   .metric-grid,
   .protocol-row {
     grid-template-columns: 1fr;
+  }
+
+  .protocol-head {
+    display: grid;
   }
 
   .terminal-header nav {
