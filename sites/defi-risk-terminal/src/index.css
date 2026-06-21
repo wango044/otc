@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #d8e1dc;
+  background: #111614;
+  font-weight: 500;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+a,
+button {
+  font: inherit;
+}
+
+.risk-terminal {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(216, 225, 220, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, #111614, #161c19);
+  background-size: 56px 56px, auto;
+}
+
+.terminal-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 18px 22px;
+  border-bottom: 1px solid #2a332f;
+  font-family: 'Geist Mono', monospace;
+}
+
+.terminal-header div {
+  display: grid;
+  gap: 4px;
+}
+
+.terminal-header span {
+  color: #8ea39a;
+  font-size: 13px;
+}
+
+.terminal-header nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+}
+
+.terminal-header a {
+  color: #d8e1dc;
+  text-decoration: none;
+}
+
+.terminal-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 320px;
+  gap: 12px;
+  padding: 12px;
+}
+
+.risk-sidebar,
+.risk-main,
+.alert-panel,
+.metric-grid article,
+.heatmap,
+.protocol-table,
+.alert-panel article {
+  border: 1px solid #2a332f;
+  border-radius: 8px;
+  background: #151c19;
+}
+
+.risk-sidebar,
+.alert-panel {
+  padding: 18px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+strong,
+.protocol-row,
+.metric-grid article span,
+.alert-panel article span {
+  font-family: 'Geist Mono', monospace;
+}
+
+h1 {
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+.risk-sidebar p {
+  margin-top: 18px;
+  color: #9badA5;
+  line-height: 1.6;
+}
+
+button {
+  width: 100%;
+  margin-top: 24px;
+  border: 1px solid #d8a84f;
+  border-radius: 8px;
+  padding: 12px;
+  background: #d8a84f;
+  color: #111614;
+  cursor: pointer;
+}
+
+.risk-main {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  background: #101512;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-grid article {
+  padding: 16px;
+}
+
+.metric-grid span {
+  display: block;
+  color: #8ea39a;
+  font-size: 13px;
+}
+
+.metric-grid strong {
+  display: block;
+  margin-top: 10px;
+  color: #79e2bd;
+  font-size: 30px;
+}
+
+.heatmap,
+.protocol-table {
+  padding: 16px;
+}
+
+.heatmap-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heatmap-head span {
+  color: #d8a84f;
+  font-family: 'Geist Mono', monospace;
+}
+
+.heat-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background: #223029;
+}
+
+.cell-1 {
+  background: #2f6f5b;
+}
+
+.cell-2 {
+  background: #79e2bd;
+}
+
+.cell-3 {
+  background: #d8a84f;
+}
+
+.cell-4 {
+  background: #b94b4b;
+}
+
+.protocol-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr 0.6fr;
+  gap: 12px;
+  border-top: 1px solid #2a332f;
+  padding: 14px 0;
+}
+
+.protocol-row em {
+  color: #d8a84f;
+  font-style: normal;
+}
+
+.protocol-row b {
+  color: #79e2bd;
+}
+
+.protocol-row:nth-child(4) b {
+  color: #f08080;
+}
+
+.alert-panel {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.alert-panel article {
+  padding: 14px;
+}
+
+.alert-panel span {
+  color: #f08080;
+  font-size: 13px;
+}
+
+.alert-panel p {
+  margin-top: 8px;
+  color: #d8e1dc;
+  line-height: 1.5;
+}
+
+@media (max-width: 1100px) {
+  .terminal-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .terminal-header,
+  .metric-grid,
+  .protocol-row {
+    grid-template-columns: 1fr;
+  }
+
+  .terminal-header nav {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .heat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "otc-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "sites/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @otc/crypto-cards-dashboard",
+    "dev:crypto-cards-dashboard": "npm run dev --workspace @otc/crypto-cards-dashboard",
+    "dev:otc-exchange-landing": "npm run dev --workspace @otc/otc-exchange-landing",
+    "dev:private-investor-club": "npm run dev --workspace @otc/private-investor-club",
+    "dev:airdrop-war-room": "npm run dev --workspace @otc/airdrop-war-room",
+    "dev:defi-risk-terminal": "npm run dev --workspace @otc/defi-risk-terminal",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "preview": "npm run preview --workspace @otc/crypto-cards-dashboard"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "playwright": "^1.61.0",
+    "vite": "^8.0.12"
+  }
+}

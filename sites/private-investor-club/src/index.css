@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #181611;
+  background: #f6f1e8;
+  font-weight: 500;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+a,
+button,
+input {
+  font: inherit;
+}
+
+.club-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(24, 22, 17, 0.05) 1px, transparent 1px),
+    #f6f1e8;
+  background-size: 110px 100%;
+}
+
+.club-nav {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: center;
+  padding: 24px 42px;
+}
+
+.club-nav a {
+  color: #181611;
+  text-decoration: none;
+}
+
+.club-nav > a {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.club-nav nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.club-hero {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  min-height: 560px;
+  align-items: end;
+  padding: 42px;
+  border-top: 1px solid rgba(24, 22, 17, 0.14);
+  border-bottom: 1px solid rgba(24, 22, 17, 0.14);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+.club-title p,
+.deal-room > div > p,
+.apply-panel p {
+  margin-bottom: 14px;
+  color: #8a6a2f;
+  font-size: 14px;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 98px;
+  line-height: 0.94;
+  font-weight: 700;
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 46px;
+  line-height: 1;
+}
+
+.club-intro {
+  max-width: 430px;
+  justify-self: end;
+}
+
+.club-intro p,
+.club-journal p,
+.deal-list p {
+  color: #5f584b;
+  line-height: 1.7;
+}
+
+.club-intro a {
+  display: inline-flex;
+  margin-top: 28px;
+  border: 1px solid #181611;
+  border-radius: 8px;
+  padding: 13px 18px;
+  color: #181611;
+  text-decoration: none;
+}
+
+.membership-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(24, 22, 17, 0.14);
+}
+
+.membership-strip span {
+  padding: 18px;
+  border-right: 1px solid rgba(24, 22, 17, 0.14);
+  text-align: center;
+}
+
+.deal-room {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 34px;
+  padding: 42px;
+}
+
+.deal-list {
+  display: grid;
+  gap: 12px;
+}
+
+.deal-list article {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid rgba(24, 22, 17, 0.14);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(255, 252, 245, 0.72);
+}
+
+.deal-list strong {
+  color: #8a6a2f;
+}
+
+.club-journal {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: rgba(24, 22, 17, 0.14);
+}
+
+.club-journal article {
+  padding: 42px;
+  background: #fffaf0;
+}
+
+.club-journal p {
+  margin-top: 18px;
+}
+
+.apply-panel {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 28px;
+  align-items: end;
+  margin: 42px;
+  border: 1px solid rgba(24, 22, 17, 0.18);
+  border-radius: 8px;
+  padding: 28px;
+  background: #181611;
+  color: #fffaf0;
+}
+
+.apply-panel h2 {
+  color: #fffaf0;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+}
+
+input,
+button {
+  border: 1px solid rgba(255, 250, 240, 0.24);
+  border-radius: 8px;
+  padding: 13px;
+}
+
+input {
+  background: rgba(255, 250, 240, 0.08);
+  color: #fffaf0;
+}
+
+button {
+  background: #d2ad67;
+  color: #181611;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .club-hero,
+  .deal-room,
+  .club-journal,
+  .apply-panel,
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .club-intro {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 620px) {
+  .club-nav,
+  .club-hero,
+  .deal-room,
+  .club-journal article,
+  .apply-panel {
+    padding: 22px;
+  }
+
+  .club-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .club-nav nav {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: 62px;
+  }
+
+  .membership-strip,
+  .deal-list article {
+    grid-template-columns: 1fr;
+  }
+}
